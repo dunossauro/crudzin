@@ -6,7 +6,7 @@ Experiência com um crud usando flask e suas ferramentas
 - flask_sqlalchemy
 - flask_migrate
 - flask_marshmallow
-- marshmallow_sqlalchmey
+- marshmallow_sqlalchemy
 
 ## Apoie a Live de Python
 
