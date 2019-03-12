@@ -30,3 +30,15 @@ flask db init
 flask db migrate
 flask db upgrade
 ```
+
+
+## Como rodar os testes e obter cobertura
+
+```sh
+# gera o report e roda os testes
+coverage run --source=app -m unittest discover -s tests/ -v
+# mostra um resumo da cobertura em shell
+coverage report
+# gera o path '/htmlcov' com htmls estáticos da cobertura
+coverage html
+```
