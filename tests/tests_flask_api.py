@@ -13,7 +13,6 @@ class TestFlaskBase(TestCase):
         self.client = self.app.test_client()
         self.app.db.create_all()
 
-
     def tearDown(self):
         """Roda depois de todos os testes."""
         self.app.db.drop_all()
@@ -53,6 +52,7 @@ class TestCadastro(TestFlaskBase):
         response = self.client.post(url_for('books.cadastrar'), json=dado)
 
         self.assertEqual(esperado, response.json)
+
 
 class TestMostrar(TestFlaskBase):
     def test_mostrar_deve_retornar_uma_query_vazia(self):
