@@ -8,9 +8,8 @@ bp_books = Blueprint('books', __name__)
 
 @bp_books.route('/mostrar', methods=['GET'])
 def mostrar():
-    bs = BookSchema(many=True)
     result = Book.query.all()
-    return bs.jsonify(result), 200
+    return BookSchema(many=True).jsonify(result), 200
 
 
 @bp_books.route('/deletar/<identificador>', methods=['GET'])
@@ -33,6 +32,10 @@ def modificar(identificador):
 def cadastrar():
     bs = BookSchema()
     book, error = bs.load(request.json)
+
+    if error:
+        return jsonify(error), 401
+
     current_app.db.session.add(book)
     current_app.db.session.commit()
     return bs.jsonify(book), 201
