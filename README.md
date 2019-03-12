@@ -12,7 +12,11 @@ Experiência com um crud usando flask e suas ferramentas
 
 apoia.se/livedepython
 
+## Vídeos onde o projeto foi desenvolvido
 
+[Desenvolvimento inicial](https://www.youtube.com/watch?v=WzaKIRJBGXo)
+
+[Escrevendo os testes](https://www.youtube.com/watch?v=jqDxDsRJtAo)
 ## Como rodar esse projeto
 
 ```sh
