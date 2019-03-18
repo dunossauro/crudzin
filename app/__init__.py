@@ -6,7 +6,7 @@ from .serealizer import configure as config_ma
 
 def create_app():
     app = Flask(__name__)
-
+    app.config['SECRET_KEY'] = 'MINHA CHAVE SECRETA'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/crudzin.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -17,5 +17,8 @@ def create_app():
 
     from .books import bp_books
     app.register_blueprint(bp_books)
+
+    from .user import bp_user
+    app.register_blueprint(bp_user)
 
     return app
