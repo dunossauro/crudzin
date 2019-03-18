@@ -1,32 +1,17 @@
-from unittest import TestCase
+from base_test_classes import TestFlaskLoged
 from flask import url_for
-from app import create_app
 
 
-class TestFlaskBase(TestCase):
-    def setUp(self):
-        """Roda antes de todos os testes."""
-        self.app = create_app()
-        self.app.testing = True
-        self.app_context = self.app.test_request_context()
-        self.app_context.push()
-        self.client = self.app.test_client()
-        self.app.db.create_all()
-
-
-    def tearDown(self):
-        """Roda depois de todos os testes."""
-        self.app.db.drop_all()
-
-
-class TestCadastro(TestFlaskBase):
+class TestCadastro(TestFlaskLoged):
     def test_cadastrar_deve_retornar_o_payload_enviado_sem_id(self):
         dado = {
             'livro': 'Python 3',
             'escritor': 'Eduardo'
         }
 
-        response = self.client.post(url_for('books.cadastrar'), json=dado)
+        response = self.client.post(
+            url_for('books.cadastrar'), json=dado, headers=self.header
+        )
 
         response.json.pop('id')
 
@@ -38,7 +23,9 @@ class TestCadastro(TestFlaskBase):
         }
 
         esperado = {'escritor': ['Missing data for required field.']}
-        response = self.client.post(url_for('books.cadastrar'), json=dado)
+        response = self.client.post(
+            url_for('books.cadastrar'), json=dado, headers=self.header
+        )
 
         self.assertEqual(esperado, response.json)
 
@@ -50,13 +37,18 @@ class TestCadastro(TestFlaskBase):
         }
 
         esperado = {'id': ['Não envie pelo amor de deus o ID']}
-        response = self.client.post(url_for('books.cadastrar'), json=dado)
+        response = self.client.post(
+            url_for('books.cadastrar'), json=dado, headers=self.header
+        )
 
         self.assertEqual(esperado, response.json)
 
-class TestMostrar(TestFlaskBase):
+
+class TestMostrar(TestFlaskLoged):
     def test_mostrar_deve_retornar_uma_query_vazia(self):
-        response = self.client.get(url_for('books.mostrar'))
+        response = self.client.get(
+            url_for('books.mostrar'), headers=self.header
+        )
         self.assertEqual([], response.json)
 
     def test_mostrar_deve_retornar_um_query_com_elemento_iserido(self):
@@ -65,16 +57,24 @@ class TestMostrar(TestFlaskBase):
             'escritor': 'Eduardo'
         }
 
-        response = self.client.post(url_for('books.cadastrar'), json=dado)
-        response = self.client.post(url_for('books.cadastrar'), json=dado)
+        response = self.client.post(
+            url_for('books.cadastrar'), json=dado, headers=self.header
+        )
+        response = self.client.post(
+            url_for('books.cadastrar'), json=dado, headers=self.header
+        )
 
-        response = self.client.get(url_for('books.mostrar'))
+        response = self.client.get(
+            url_for('books.mostrar'), headers=self.header
+        )
         self.assertEqual(2, len(response.json))
 
 
-class TestDeletar(TestFlaskBase):
+class TestDeletar(TestFlaskLoged):
     def test_deletar_deve_retornar_deletado_quando_nao_encontrar_regristro(self):
-        response = self.client.get(url_for('books.deletar', identificador=1))
+        response = self.client.get(
+            url_for('books.deletar', identificador=1), headers=self.header
+        )
 
         self.assertEqual(response.json, 'Deletado!!!!')
 
@@ -87,12 +87,14 @@ class TestDeletar(TestFlaskBase):
 
         self.client.post(url_for('books.cadastrar'), json=dado)
 
-        response = self.client.get(url_for('books.deletar', identificador=1))
+        response = self.client.get(
+            url_for('books.deletar', identificador=1), headers=self.header
+        )
 
         self.assertEqual(response.json, 'Deletado!!!!')
 
 
-class Testmodificar(TestFlaskBase):
+class Testmodificar(TestFlaskLoged):
     def test_modificar_(self):
         identificador = 1
         estado_inicial = {
@@ -103,11 +105,16 @@ class Testmodificar(TestFlaskBase):
         estado_final = {
             'livro': 'Python 2 não é melhor que 3',
         }
-        self.client.post(url_for('books.cadastrar'), json=estado_inicial)
+        self.client.post(
+            url_for('books.cadastrar'),
+            json=estado_inicial,
+            headers=self.header
+        )
 
         response = self.client.post(
-            url_for('books.modificar', identificador=1), json=estado_final
+            url_for('books.modificar', identificador=1),
+            json=estado_final,
+            headers=self.header
         )
-        # import ipdb; ipdb.set_trace()
         self.assertEqual(estado_final['livro'], response.json['livro'])
         self.assertEqual(identificador, response.json['id'])
