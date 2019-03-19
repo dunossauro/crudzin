@@ -1,6 +1,6 @@
 from marshmallow import fields, validates, ValidationError
 from flask_marshmallow import Marshmallow
-from .model import Book
+from .model import Book, User
 
 ma = Marshmallow()
 
@@ -19,3 +19,11 @@ class BookSchema(ma.ModelSchema):
     @validates('id')
     def validate_id(self, value):
         raise ValidationError('Não envie pelo amor de deus o ID')
+
+
+class UserSchema(ma.ModelSchema):
+    class Meta:
+        model = User
+
+    username = fields.Str(required=True)
+    password = fields.Str(required=True)

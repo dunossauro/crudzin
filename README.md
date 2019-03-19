@@ -7,6 +7,7 @@ Experiência com um crud usando flask e suas ferramentas
 - flask_migrate
 - flask_marshmallow
 - marshmallow_sqlalchemy
+- flask-jwt-extended
 
 ## Apoie a Live de Python
 

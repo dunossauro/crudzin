@@ -1,4 +1,5 @@
 from flask import Blueprint, current_app, request, jsonify
+from flask_jwt_extended import jwt_required
 from .model import Book
 from .serealizer import BookSchema
 
@@ -7,6 +8,7 @@ bp_books = Blueprint('books', __name__)
 
 
 @bp_books.route('/mostrar', methods=['GET'])
+@jwt_required
 def mostrar():
     result = Book.query.all()
     return BookSchema(many=True).jsonify(result), 200

@@ -1,22 +1,5 @@
-from unittest import TestCase
 from flask import url_for
-from app import create_app
-
-
-class TestFlaskBase(TestCase):
-    def setUp(self):
-        """Roda antes de todos os testes."""
-        self.app = create_app()
-        self.app.testing = True
-        self.app_context = self.app.test_request_context()
-        self.app_context.push()
-        self.client = self.app.test_client()
-        self.app.db.create_all()
-
-
-    def tearDown(self):
-        """Roda depois de todos os testes."""
-        self.app.db.drop_all()
+from flask_base_tests_cases import TestFlaskBase
 
 
 class TestCadastro(TestFlaskBase):
@@ -54,9 +37,17 @@ class TestCadastro(TestFlaskBase):
 
         self.assertEqual(esperado, response.json)
 
+
 class TestMostrar(TestFlaskBase):
     def test_mostrar_deve_retornar_uma_query_vazia(self):
-        response = self.client.get(url_for('books.mostrar'))
+        self.create_user()
+        token = self.create_token()
+        # from time import sleep
+        # sleep(2) -> sleep de testes para ver o token ficar inválido
+        response = self.client.get(
+            url_for('books.mostrar'),
+            headers=token
+        )
         self.assertEqual([], response.json)
 
     def test_mostrar_deve_retornar_um_query_com_elemento_iserido(self):
@@ -64,11 +55,12 @@ class TestMostrar(TestFlaskBase):
             'livro': 'Python 3',
             'escritor': 'Eduardo'
         }
-
+        self.create_user()
+        token = self.create_token()
         response = self.client.post(url_for('books.cadastrar'), json=dado)
         response = self.client.post(url_for('books.cadastrar'), json=dado)
 
-        response = self.client.get(url_for('books.mostrar'))
+        response = self.client.get(url_for('books.mostrar'), headers=token)
         self.assertEqual(2, len(response.json))
 
 

@@ -14,6 +14,8 @@ flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
+passlib = "*"
+flask-jwt-extended = "*"
 
 [requires]
 python_version = "3.7"
