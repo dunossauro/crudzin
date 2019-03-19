@@ -13,6 +13,13 @@ Experiência com um crud usando flask e suas ferramentas
 
 apoia.se/livedepython
 
+## Vídeos onde o projeto foi desenvolvido
+
+[Desenvolvimento inicial](https://www.youtube.com/watch?v=WzaKIRJBGXo)
+
+[Escrevendo os testes](https://www.youtube.com/watch?v=jqDxDsRJtAo)
+
+[Autenticando a API](https://youtu.be/ieGA91ExOH0)
 
 ## Como rodar esse projeto
 
@@ -30,4 +37,16 @@ flask run
 flask db init
 flask db migrate
 flask db upgrade
+```
+
+
+## Como rodar os testes e obter cobertura
+
+```sh
+# gera o report e roda os testes
+coverage run --source=app -m unittest discover -s tests/ -v
+# mostra um resumo da cobertura em shell
+coverage report
+# gera o path '/htmlcov' com htmls estáticos da cobertura
+coverage html
 ```
