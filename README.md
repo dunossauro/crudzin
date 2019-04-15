@@ -21,6 +21,8 @@ apoia.se/livedepython
 
 [Autenticando a API](https://youtu.be/ieGA91ExOH0)
 
+[Testes de comportamento com BDD](https://youtu.be/aX0P5tsiat4)
+
 ## Como rodar esse projeto
 
 ```sh
@@ -49,4 +51,10 @@ coverage run --source=app -m unittest discover -s tests/ -v
 coverage report
 # gera o path '/htmlcov' com htmls estáticos da cobertura
 coverage html
+```
+
+## Como rodar os testes de comportamento com BDD
+
+```sh
+behave tests/behavior_tests/features/
 ```
