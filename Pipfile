@@ -7,6 +7,7 @@ verify_ssl = true
 requests = "*"
 ipdb = "*"
 coverage = "*"
+behave = "==1.2.5"
 
 [packages]
 flask = "*"
