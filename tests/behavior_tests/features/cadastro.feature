@@ -3,8 +3,8 @@ Funcionalidade: Cadastro
   Eu como um usuário
   Desejo me cadastrar no sistema
 
-Contexto: Criar o usuário
-  Dado que o usuário sejá criado
+# Contexto: Criar o usuário
+#   Dado que o usuário seja criado
 
 Cenário: Payload sem password
   Dado que o usuário Test não exista na base de dados
