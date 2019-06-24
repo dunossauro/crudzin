@@ -33,7 +33,7 @@ def modificar(identificador):
 @bp_books.route('/cadastrar', methods=['POST'])
 def cadastrar():
     bs = BookSchema()
-    book, error = bs.load(request.json)
+    book, error = bs.load(request.json, session=current_app.db.session)
 
     if error:
         return jsonify(error), 401

@@ -9,10 +9,16 @@ def configure(app):
     app.db = db
 
 
+class Escritor(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+
+
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     livro = db.Column(db.String(255))
-    escritor = db.Column(db.String(255))
+    escritor_id = db.Column(db.Integer, db.ForeignKey("escritor.id"))
+    escritor = db.relationship("Escritor")
 
 
 class User(db.Model):

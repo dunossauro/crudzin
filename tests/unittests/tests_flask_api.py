@@ -6,7 +6,7 @@ class TestCadastro(TestFlaskBase):
     def test_cadastrar_deve_retornar_o_payload_enviado_sem_id(self):
         dado = {
             'livro': 'Python 3',
-            'escritor': 'Eduardo'
+            'escritor': {'name': 'Eduardo'}
         }
 
         response = self.client.post(url_for('books.cadastrar'), json=dado)
@@ -28,7 +28,7 @@ class TestCadastro(TestFlaskBase):
     def test_cadastrar_deve_retornar_erro_quando_o_payload_contiver_a_chave_id(self):
         dado = {
             'livro': 'Python 3',
-            'escritor': 'Eduardo',
+            'escritor': {'name': 'Eduardo'},
             'id': 1
         }
 
@@ -53,7 +53,7 @@ class TestMostrar(TestFlaskBase):
     def test_mostrar_deve_retornar_um_query_com_elemento_iserido(self):
         dado = {
             'livro': 'Python 3',
-            'escritor': 'Eduardo'
+            'escritor': {'name': 'Eduardo'}
         }
         self.create_user()
         token = self.create_token()
@@ -74,7 +74,7 @@ class TestDeletar(TestFlaskBase):
     def test_deletar_deve_retornar_deletado_quando_encontrar_registro_na_base(self):
         dado = {
             'livro': 'Python 3',
-            'escritor': 'Eduardo'
+            'escritor': {'name': 'Eduardo'}
         }
 
         self.client.post(url_for('books.cadastrar'), json=dado)
@@ -89,7 +89,7 @@ class Testmodificar(TestFlaskBase):
         identificador = 1
         estado_inicial = {
             'livro': 'Python 3',
-            'escritor': 'Eduardo'
+            'escritor': {'name': 'Eduardo'}
         }
 
         estado_final = {
